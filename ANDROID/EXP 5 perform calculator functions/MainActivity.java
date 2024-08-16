@@ -1,23 +1,20 @@
 package com.example.calculator;
 
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
-
 public class MainActivity extends AppCompatActivity {
-
     private EditText inputField;
     private String operator = "";
     private double firstValue = Double.NaN;
     private Button buttonEqual; // Declare buttonEqual as an instance variable
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         inputField = findViewById(R.id.inputField);
 
         // Number Buttons
