@@ -1,0 +1,40 @@
+from google.colab import files
+!pip install kaggle
+files.upload()
+!kaggle datasets download -d paultimothymooney/chest-xray-pneumonia
+!mkdir -p ~/.kaggle
+!cp kaggle.json ~/.kaggle/
+!chmod 600 ~/.kaggle/kaggle.json
+!unzip chest-xray-pneumonia.zip
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import img_to_array, load_img
+training_image_directory = '/content/chest_xray/train'
+
+training_augmented_images = train_datagen.flow_from_directory(
+training_image_directory,
+target_size=(180, 180),
+batch_size=32,
+class_mode='categorical'
+)
+validation_augmented_images =train_datagen.flow_from_directory(
+'/content/chest_xray/val',
+target_size=(180, 180),
+batch_size=32,
+class_mode='categorical'
+)
+model.summary()
+history = model.fit(training_augmented_images, epochs=5,
+validation_data=validation_augmented_images, verbose=True)
+import numpy as np
+from tensorflow.keras.preprocessing import image
+from google.colab import files
+uploaded = files.upload()
+img_path = next(iter(uploaded.keys()))
+img = image.load_img(img_path, target_size=(180, 180))
+img_array = image.img_to_array(img)
+img_array = np.expand_dims(img_array, axis=0)
+img_array /= 255.0
+predictions = model.predict(img_array)
+predicted_class = np.argmax(predictions, axis=-1)
+print(f"Predictions: {predictions}")
+print(f"Predicted class: {predicted_class}")
