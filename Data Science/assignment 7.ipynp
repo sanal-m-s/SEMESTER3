@@ -1,11 +1,16 @@
 from google.colab import files
+
 !pip install kaggle
+
 files.upload()
+
 !kaggle datasets download -d paultimothymooney/chest-xray-pneumonia
 !mkdir -p ~/.kaggle
 !cp kaggle.json ~/.kaggle/
 !chmod 600 ~/.kaggle/kaggle.json
+
 !unzip chest-xray-pneumonia.zip
+
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
 training_image_directory = '/content/chest_xray/train'
